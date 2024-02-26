@@ -45,10 +45,10 @@ function App() {
     
     <>
 
-    <div className=' w-screen h-screen grid place-items-center'>
+    <div className=' w-screen h-screen flex flex-col justify-center items-center'>
       <div className='flex m-4 items-center'>
         <input 
-          className='bg-white w-80 sm:w-96 h-16 rounded-t-2xl rounded-l-md rounded-e-md shadow-[0_20px_50px_rgba(8,_112,_184,_0.7)] border-b-4  border-green-800 relative block focus:outline-none p-5' 
+          className='bg-white w-64 sm:w-96 h-16 rounded-t-2xl rounded-l-md rounded-e-md shadow-[0_20px_50px_rgba(8,_112,_184,_0.7)] border-b-4  border-green-800 relative block focus:outline-none p-5' 
           type="text"
           value={password}
           ref={passwordRef}
@@ -58,27 +58,27 @@ function App() {
         <button onClick={passwordGenerator}><i className="fa-solid fa-rotate-right text-3xl relative block ml-5 hover:scale-90"></i></button>
       </div>
 
-      <div className='bg-white rounded-2xl p-16 shadow-2xl'>
+      <div className='bg-white rounded-2xl p-4 sm:p-16 shadow-2xl w-max h-max'>
         <h1 className='text-3xl font-bold border-b-2 pb-4'>Customize your Password</h1>
         <div className='flex'>
           <div>
-            <p className='text-2xl mt-5'>Password Length</p>
+            <p className='text-2xl sm:mt-5'>Password Length</p>
             <div className='flex'>
               <input 
                 type="number"
-                className='w-14 h-10 shadow-[inset_-12px_-8px_40px_#46464620] text-center mt-5 border border-black rounded-md'
+                className='w-14 h-10 shadow-[inset_-12px_-8px_40px_#46464620] text-center mt-3 sm:mt-5 border border-black rounded-md'
                 value={length}
               />
               <input type="range"
               min={1}
               max={50}
               onChange={(e)=>{setLength(e.target.value)}}
-              className='mt-5 ml-3' />
+              className='mt-3 sm:mt-5 ml-1 sm:ml-3' />
             </div>
           </div>
 
 
-          <div className='mt-5 text-xl ml-5'>
+          <div className='mt-5 text-xl sm:ml-5'>
             <div className='flex items-center gap-x-4'>
               <input 
                 type="checkbox" 
