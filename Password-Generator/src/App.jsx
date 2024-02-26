@@ -45,10 +45,10 @@ function App() {
     
     <>
 
-    <div className='bg-cyan-100 w-screen h-screen grid place-items-center'>
+    <div className=' w-screen h-screen grid place-items-center'>
       <div className='flex m-4 items-center'>
         <input 
-          className='bg-white w-96 h-16 rounded-t-2xl rounded-l-md rounded-e-md shadow-[0_20px_50px_rgba(8,_112,_184,_0.7)] border-b-4  border-green-800 relative block focus:outline-none p-5' 
+          className='bg-white w-80 sm:w-96 h-16 rounded-t-2xl rounded-l-md rounded-e-md shadow-[0_20px_50px_rgba(8,_112,_184,_0.7)] border-b-4  border-green-800 relative block focus:outline-none p-5' 
           type="text"
           value={password}
           ref={passwordRef}
