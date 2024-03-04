@@ -3,44 +3,48 @@ import { useState, useCallback, useEffect, useRef } from 'react'
 
 
 function App() {
-  
   const [length, setLength] = useState(8)
-  const [numberAllowed, setNumberAllowed] = useState(false);
-  const [uppercase, setUppercase] = useState(false);
-  const [lowercase, setLowercase] = useState(false);
-  const [charAllowed, setCharAllowed] = useState(false)
-  const [password, setPassword] = useState("")
+  const [upperCase, setupperCase] = useState(false)
+  const [lowerCase, setLowerCase] = useState(false)
+  const [numberAllowed, setNumber] = useState(false)
+  const [charAllowed, setChar] = useState(false)
+  const [password, setPassword] = useState('')
 
-  //useRef hook
-  const passwordRef = useRef(null)
+  const passwordRef = useRef()
 
-  const passwordGenerator = useCallback(() => {
-    let pass = ""
-    let str = ""
-    if(uppercase) str += "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-    if(lowercase) str += "abcdefghijklmnopqrstuvwxyz"
-    if (numberAllowed) str += "0123456789"
-    if (charAllowed) str += "!@#$%^&*-_+=[]{}~`"
+  const copyPasswordToClipboard = useCallback(()=>{
+    passwordRef.current?.select()
+    window.navigator.clipboard.writeText(password)
+  },[])
 
-    for (let i = 1; i <= length; i++) {
-      let char = Math.floor(Math.random() * str.length + 1)
-      pass += str.charAt(char)
+  const passwordGenerator = useCallback(()=>{
+    let generatedPass = ''
+    let pass = ''
+
+    if(upperCase){
+      pass += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    }
+    if(lowerCase){
+      pass += 'abcdefghijklmnopqrstuvwxyz'
+    }
+    if(numberAllowed){
+      pass += '0123456789'
+    }
+    if(charAllowed){
+      pass += '~`@#$%^&*(){}[]'
+    }
+    for(let i=1; i<=length; i++){
+      let char = Math.floor(Math.random() * pass.length + 1)
+      generatedPass += pass.charAt(char)
     }
 
-    setPassword(pass)
+    setPassword(generatedPass)
+  },[length, upperCase, lowerCase, numberAllowed, charAllowed, setPassword])
 
-
-  }, [length, numberAllowed, charAllowed, uppercase, lowercase, setPassword])
-
-  const copyPasswordToClipboard = useCallback(() => {
-    passwordRef.current?.select();
-    passwordRef.current?.setSelectionRange(0, 999);
-    window.navigator.clipboard.writeText(password)
-  }, [password])
-
-  useEffect(() => {
+  useEffect(()=>{
     passwordGenerator()
-  }, [length, numberAllowed, charAllowed,uppercase,lowercase, passwordGenerator])
+  },[length, numberAllowed, charAllowed, upperCase, lowerCase, passwordGenerator])
+  
   return (
     
     <>
@@ -54,7 +58,7 @@ function App() {
           ref={passwordRef}
           readOnly
         />
-        <button onClick={copyPasswordToClipboard}><i className="fa-regular fa-copy text-3xl relative block ml-5 hover:scale-90"></i></button>
+        <button onClick={copyPasswordToClipboard}> <i className="fa-regular fa-copy text-3xl relative block ml-5 hover:scale-90"></i></button>
         <button onClick={passwordGenerator}><i className="fa-solid fa-rotate-right text-3xl relative block ml-5 hover:scale-90"></i></button>
       </div>
 
@@ -71,7 +75,7 @@ function App() {
               />
               <input type="range"
               min={1}
-              max={50}
+              max={20}
               onChange={(e)=>{setLength(e.target.value)}}
               className='mt-3 sm:mt-5 ml-1 sm:ml-3' />
             </div>
@@ -83,8 +87,7 @@ function App() {
               <input 
                 type="checkbox" 
                 className='w-5 h-5'
-                defaultChecked={uppercase}
-                onChange={()=>{setUppercase((prev) => !prev)}}
+                onChange={()=>{setupperCase((prev)=> !prev)}}
               />
               <label htmlFor="">UPPERCASE</label>
             </div>
@@ -93,8 +96,7 @@ function App() {
               <input 
                 type="checkbox" 
                 className='w-5 h-5'
-                defaultChecked={lowercase}
-                onChange={()=>{setLowercase((prev) => !prev)}}
+                onChange={()=>{setLowerCase((prev) =>!prev)}}
               />
               <label htmlFor="">lowercase</label>
             </div>
@@ -103,8 +105,7 @@ function App() {
               <input 
                 type="checkbox" 
                 className='w-5 h-5'
-                defaultChecked={numberAllowed}
-                onChange={()=>{setNumberAllowed((prev) => !prev)}}
+                onChange={()=>{setNumber((prev) => !prev )}}
               />
               <label htmlFor="">Numbers</label>
             </div>
@@ -113,8 +114,7 @@ function App() {
               <input 
                 type="checkbox" 
                 className='w-5 h-5'
-                defaultChecked={charAllowed}
-                onChange={()=>{setCharAllowed((prev) => !prev)}}
+                onChange={()=>{setChar((prev)=>!prev)}}
               />
               <label htmlFor="">Symbols</label>
             </div>
